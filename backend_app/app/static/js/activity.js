@@ -68,7 +68,7 @@ define(function (require) {
 
     require('activity/utils');
     require('activity/jquery');
-    require('activity/client');
+    //require('activity/client');
     require('activity/artwork');
     require('activity/munsell');
     require('activity/trash');
@@ -1960,12 +1960,13 @@ define(function (require) {
                 ['go-home', _findBlocks, _('Home')],
                 ['help', _showHelp, _('Help')],
                 ['help', _gitinit, _('Init')],
+                ['help', _save, _('Save to file')],
                 ['help', _gitadd, _('Add')],
                 ['help', _gitstatus, _('Status')],
                 ['help', _gitcommit, _('Commit')],
                 ['help', _gitcommithistory, _('Commit History')],
                 ['help', _gitcommitlogs, _('Commit Logs')],
-                ['help', _gitdiff, _('Diff')],
+                ['help', _gitdiff, _('Diff of last 2 commits')],
                 ['help', _gitloadrepo, _('Load A repo')]
 
 

@@ -1,6 +1,7 @@
 
 from app import app
 from flask import Flask, render_template
+from flask import request
 import os
 
 from dulwich import porcelain as p
@@ -88,7 +89,7 @@ class backend():
 			print 'Unable to create README, does it already exist?'
 
 
-	def edit_readme(self, name, content):
+	def edit_file(self, name, content):
 		file = open(os.path.join(self.repo_path,name), 'w')
 		file.write(content)
 		file.close()
@@ -219,8 +220,8 @@ b = backend()
 def index():
 	return render_template('index.html')
 
-@app.route('/init', methods=['GET', 'POST'])
-def init():
+@app.route('/ginit', methods=['GET', 'POST'])
+def ginit():
 	print "Initializing the repo"
 	#b = backend()
 	b.local_init("turtle", "TurtleJS")
@@ -309,4 +310,13 @@ def loadrepo():
 	a = "Repo loaded"
 	return a
 
+@app.route('/save', methods=['GET', 'POST'])
+def save():
+	a = request.form
+	print type(a)
+	a = str(a)
+	b.edit_file(b.current_file_name,a)
+	print b.current_file_name
+	a = "Repo loaded"
+	return a
 

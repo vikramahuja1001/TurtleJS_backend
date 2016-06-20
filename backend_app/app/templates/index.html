@@ -33,10 +33,20 @@
         
     });
 
+
+    function _save(){
+      data = 'data:text/plain;charset=utf-8,' + prepareExport()
+      console.log(data);
+      var request = new XMLHttpRequest();
+      request.open('POST', 'save', true);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.send(data);
+    };
+
 function _gitinit(){
   console.log("Initializing");
     var request = new XMLHttpRequest();
-request.open('GET', 'init', true);
+request.open('GET', 'ginit', true);
 
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
