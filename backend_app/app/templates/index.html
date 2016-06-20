@@ -35,13 +35,14 @@
 
 
     function _save(){
-      data = 'data:text/plain;charset=utf-8,' + prepareExport()
+      data = 'data=' + prepareExport();
       console.log(data);
       var request = new XMLHttpRequest();
       request.open('POST', 'save', true);
       request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
       request.send(data);
     };
+
 
 function _gitinit(){
   console.log("Initializing");
@@ -275,27 +276,18 @@ console.log("Showing Commit Logs : ");
 
       */
 
+
 function _gitloadrepo(){
   console.log("Loading a new repo/file");
-    var request = new XMLHttpRequest();
-request.open('GET', 'loadrepo', true);
+  console.log('Loading .tb file');
 
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
-    // Success!
-    var resp = request.responseText;
-    console.log(resp);
-  } else {
-    // We reached our target server, but it returned an error
-
-  }
+    document.querySelector('#myOpenGitFile').focus();
+            document.querySelector('#myOpenGitFile').click();
+            window.scroll(0, 0);
+    
 };
 
-request.onerror = function() {
-  // There was a connection error of some sort
-};
-request.send();
-};
+
 
 /*
 
@@ -417,6 +409,7 @@ console.log("Showing Diff between 2 commits : ");
         <div id="ioDiv">
           <input class="file" type="file" id="myMedia" accept="image/*"/>
           <input class="file" type="file" id="myOpenFile" accept=".ta, .tb"/>
+                   <input class="file" type="file" id="myOpenGitFile" accept=".ta, .tb"/>
           <input class="file" type="file" id="myOpenPlugin" accept=".json"/>
           <input class="file" type="file" id="myOpenAll" />
   <!-- <input class="file" type="file" id="mySaveFile" accept=".ta, .tb" nwsaveas="turtle-project.tb" /> -->

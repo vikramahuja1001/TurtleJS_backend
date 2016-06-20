@@ -133,6 +133,7 @@ define(function (require) {
 
         // Set up a file chooser for the doOpen function.
         var fileChooser = docById('myOpenFile');
+        var GitfileChooser = docById('myOpenGitFile');
         // Set up a file chooser for the doOpenPlugin function.
         var pluginChooser = docById('myOpenPlugin');
         // The file chooser for all files.
@@ -611,6 +612,7 @@ define(function (require) {
                 this.value = null;
             });
 
+
             fileChooser.addEventListener('change', function (event) {
                 // Read file here.
                 var reader = new FileReader();
@@ -623,7 +625,7 @@ define(function (require) {
                         var cleanData = rawData.replace('\n', ' ');
                         console.log(cleanData);
                         var obj = JSON.parse(cleanData);
-                        console.log(obj)
+                        console.log(obj);
                         // First, hide the palettes as they will need updating.
                         for (var name in blocks.palettes.dict) {
                             blocks.palettes.dict[name].hideMenu(true);
@@ -638,6 +640,58 @@ define(function (require) {
                 });
 
                 reader.readAsText(fileChooser.files[0]);
+            }, false);
+
+            GitfileChooser.addEventListener('click', function (event) {
+                this.value = null;
+            });
+
+            GitfileChooser.addEventListener('change', function (event) {
+                // Read file here.
+                var reader = new FileReader();
+
+                reader.onload = (function (theFile) {
+                    // Show busy cursor.
+                    document.body.style.cursor = 'wait';
+                    setTimeout(function () {
+                        var rawData = reader.result;
+                        var cleanData = rawData.replace('\n', ' ');
+                        console.log(cleanData);
+                        var obj = JSON.parse(cleanData);
+                        console.log(obj);
+                        // First, hide the palettes as they will need updating.
+                        for (var name in blocks.palettes.dict) {
+                            blocks.palettes.dict[name].hideMenu(true);
+                        }
+
+                        refreshCanvas();
+
+                        blocks.loadNewBlocks(obj);
+
+                            var request = new XMLHttpRequest();
+request.open('GET', 'loadrepo', true);
+
+request.onload = function() {
+  if (request.status >= 200 && request.status < 400) {
+    // Success!
+    var resp = request.responseText;
+    console.log(resp);
+  } else {
+    // We reached our target server, but it returned an error
+
+  }
+};
+
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+request.send();
+                        // Restore default cursor.
+                        document.body.style.cursor = 'default';
+                    }, 200);
+                });
+
+                reader.readAsText(GitfileChooser.files[0]);
             }, false);
 
             allFilesChooser.addEventListener('click', function (event) {
@@ -2049,6 +2103,10 @@ define(function (require) {
             ];
 
             document.querySelector('#myOpenFile')
+                    .addEventListener('change', function(event) {
+                        thumbnails.model.controller.hide();
+            });
+            document.querySelector('#myOpenGitFile')
                     .addEventListener('change', function(event) {
                         thumbnails.model.controller.hide();
             });

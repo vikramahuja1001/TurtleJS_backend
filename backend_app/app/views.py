@@ -226,7 +226,7 @@ def ginit():
 	#b = backend()
 	b.local_init("turtle", "TurtleJS")
 	print b.repo_name
-	a = "turtle_vikram"
+	a = "turtle_vikram.tb"
 	b.set_current_file_name(a)
 	b.create_file(a,"Code will be here")
 	b.set_current_file_name(a)
@@ -305,14 +305,15 @@ def difftree():
 @app.route('/loadrepo', methods=['GET', 'POST'])
 def loadrepo():
 	b.load_repo("turtle")
-	b.set_current_file_name("turtle_vikram")
+	b.set_current_file_name("turtle_vikram.tb")
 	print b.current_file_name
 	a = "Repo loaded"
 	return a
 
 @app.route('/save', methods=['GET', 'POST'])
 def save():
-	a = request.form
+	a = request.form['data']
+	print a
 	print type(a)
 	a = str(a)
 	b.edit_file(b.current_file_name,a)
