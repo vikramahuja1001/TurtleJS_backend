@@ -14,8 +14,6 @@
 
 
 
-$
-
 
       function _gitinit(){
         console.log("Initializing");
@@ -57,7 +55,7 @@ console.log("Getting Status");
 
              function _gitcommit(){
 console.log("Commiting");
-$(".commit").toggle();
+
            $.ajax({
     url: "commit",
     type:'GET',
