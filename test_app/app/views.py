@@ -8,7 +8,6 @@ from dulwich.repo import Repo as DulwichRepo
 from dulwich import repo 
 import time
 
-
 import subprocess
 
 
@@ -206,8 +205,6 @@ class backend():
 			print "Can not update"
 
 
-
-
 b = backend()
 	#def push():
 
@@ -238,7 +235,6 @@ def init():
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
-	#b.load_repo("turtle")
 	b.add(b.current_file_name)
 	return "File Added"
 
@@ -270,9 +266,7 @@ def commithistory():
 	print c 
 	print type(a)
 	print len(a)
-	
 	return c
-
 
 @app.route('/commitlogs', methods=['GET', 'POST'])
 def commitlogs():
@@ -281,25 +275,16 @@ def commitlogs():
 	#print type(a)
 	return a
 
-
-
 @app.route('/difftree', methods=['GET', 'POST'])
 def difftree():
 	#b.load_repo("turtle")
 	a = b.get_diff()
 	print a
-	import commands
-	cmd = '> temp'
-	output = commands.getoutput(cmd)
-	print output
-	proc=subprocess.Popen('> temp', shell=True, stdout=subprocess.PIPE, )
-	output=proc.communicate()[0]
-	print output
+	
 	#print b.get_diff()
 	#print type(a)
 	a = "Hello"
 	return a
-
 
 @app.route('/loadrepo', methods=['GET', 'POST'])
 def loadrepo():
