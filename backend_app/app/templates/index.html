@@ -41,6 +41,8 @@
       request.open('POST', 'save', true);
       request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
       request.send(data);
+      docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
     };
 
 
@@ -55,7 +57,7 @@ request.onload = function() {
     // Success!
      resp = request.responseText;
     console.log(resp);
-    docById('descElem').innerHTML += "<h2>" + resp + "</h2>";  
+    docById('descElem').innerHTML =resp;
 docById('descElem').style.visibility = 'visible';
 
   } else {
@@ -98,6 +100,8 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     console.log(resp);
+        docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
   } else {
     // We reached our target server, but it returned an error
 
@@ -139,6 +143,8 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     console.log(resp);
+        docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
   } else {
     // We reached our target server, but it returned an error
 
@@ -178,6 +184,8 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     console.log(resp);
+        docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
   } else {
     // We reached our target server, but it returned an error
 
@@ -216,6 +224,8 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     console.log(resp);
+        docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
   } else {
     // We reached our target server, but it returned an error
 
@@ -253,6 +263,8 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     console.log(resp);
+        docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
   } else {
     // We reached our target server, but it returned an error
 
@@ -319,6 +331,8 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     console.log(resp);
+        docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
   } else {
     // We reached our target server, but it returned an error
 

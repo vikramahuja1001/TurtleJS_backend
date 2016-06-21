@@ -676,6 +676,8 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     console.log(resp);
+        docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
   } else {
     // We reached our target server, but it returned an error
 

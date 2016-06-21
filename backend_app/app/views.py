@@ -232,23 +232,26 @@ def ginit():
 	b.set_current_file_name(a)
 
 	print "File Created"
-
-	a = "Local  repo " + b.repo_name + "created"
-	return a
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	a = "<h2>Local  repo " + b.repo_name + " created</h2>"
+	return img+a
 
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
 	#b.load_repo("turtle")
 	b.add(b.current_file_name)
-	return "File Added"
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	a = "<h2>File Added: " + b.current_file_name + "</h2>"
+	return img + a
 
 @app.route('/status', methods=['GET', 'POST'])
 def status():
 	#b.load_repo("turtle")
 	print b.current_file_name
-	a = str(b.get_status())
-	return a
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	a = "<h2>" + str(b.get_status()) + "</h2>"
+	return img+a
 
 
 @app.route('/commit', methods=['GET', 'POST'])
@@ -256,8 +259,9 @@ def commit():
 	#b.load_repo("turtle")
 	a = "First Commit"
 	b.commit(a)
-	c = "Commited with Commit message:" + a
-	return c
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	c = "<h2>Commited with Commit message:" + a + "</h2>"
+	return img+c
 
 
 @app.route('/commithistory', methods=['GET', 'POST'])
@@ -271,8 +275,10 @@ def commithistory():
 	print c 
 	print type(a)
 	print len(a)
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	c = "<h2>" + c + "</h2>"
 	
-	return c
+	return img+c
 
 
 @app.route('/commitlogs', methods=['GET', 'POST'])
@@ -307,8 +313,9 @@ def loadrepo():
 	b.load_repo("turtle")
 	b.set_current_file_name("turtle_vikram.tb")
 	print b.current_file_name
-	a = "Repo loaded"
-	return a
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	a = "<h2>Repo loaded: " + b.repo_name + "</h2>"
+	return img+a
 
 @app.route('/save', methods=['GET', 'POST'])
 def save():
@@ -318,6 +325,7 @@ def save():
 	a = str(a)
 	b.edit_file(b.current_file_name,a)
 	print b.current_file_name
-	a = "Repo loaded"
-	return a
+	a = "<h2> File Saved: " + b.current_file_name + "</h2>" 
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	return img+a
 
