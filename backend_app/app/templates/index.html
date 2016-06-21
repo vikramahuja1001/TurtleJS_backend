@@ -46,14 +46,18 @@
 
 function _gitinit(){
   console.log("Initializing");
+  var resp = "hello";
     var request = new XMLHttpRequest();
 request.open('GET', 'ginit', true);
 
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
     // Success!
-    var resp = request.responseText;
+     resp = request.responseText;
     console.log(resp);
+    docById('descElem').innerHTML += "<h2>" + resp + "</h2>";  
+docById('descElem').style.visibility = 'visible';
+
   } else {
     // We reached our target server, but it returned an error
 
@@ -64,6 +68,7 @@ request.onerror = function() {
   // There was a connection error of some sort
 };
 request.send();
+
 };
 /*
 
@@ -276,7 +281,6 @@ console.log("Showing Commit Logs : ");
 
       */
 
-
 function _gitloadrepo(){
   console.log("Loading a new repo/file");
   console.log('Loading .tb file');
@@ -328,6 +332,10 @@ request.send();
 };
 
 
+function hide(){
+  document.getElementById("descElem").style.visibility="hidden";
+};
+
 /*
 
               function _gitdiff(){
@@ -342,7 +350,7 @@ console.log("Showing Diff between 2 commits : ");
         };
 
         */
-  
+
 </script> 
 
 
@@ -419,6 +427,8 @@ console.log("Showing Diff between 2 commits : ");
     </div>
 
     <div id="helpElem"></div>
+    <div id="descElem" style="position: absolute; display: block; padding: 0px 15px 15px; font-size: 20px; color: rgb(0, 0, 0); background:white;left: 35%; top: 30%; width: 200px; height: 200px;  border: 1px #111 solid; visibility: hidden;"><img src="{{ url_for('static', filename='header-icons/delete.svg') }}"  onclick="hide()"/><h2></h2></div>
+
 
 </body>
 </html>
