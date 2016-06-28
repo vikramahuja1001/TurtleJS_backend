@@ -41,8 +41,9 @@
       request.open('POST', 'save', true);
       request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
       request.send(data);
+      resp = "saved";
       docById('descElem').innerHTML =resp;
-docById('descElem').style.visibility = 'visible';
+    docById('descElem').style.visibility = 'visible';
     };
 
 
