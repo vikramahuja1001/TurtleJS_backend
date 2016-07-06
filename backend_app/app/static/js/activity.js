@@ -2021,7 +2021,7 @@ request.send();
                 ['help', _gitstatus, _('Status')],
                 ['help', _gitcommit, _('Commit')],
                 ['help', _gitcommithistory, _('Commit History')],
-                ['help', _gitcommitlogs, _('Commit Logs')],
+                ['help', _gitrevertcommit, _('Revert back to a commit')],
                 ['help', _gitdiff, _('Diff of last 2 commits')],
                 ['help', _gitloadrepo, _('Load A repo')]
 

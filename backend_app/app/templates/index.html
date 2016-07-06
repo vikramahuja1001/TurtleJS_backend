@@ -46,6 +46,20 @@
     docById('descElem').style.visibility = 'visible';
     };
 
+    function _returncommit(){
+      console.log(data);
+      var request = new XMLHttpRequest();
+      request.open('POST', 'returncommit', true);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.send(data);
+      resp = "reverted";
+      docById('descElem').innerHTML =resp;
+    docById('descElem').style.visibility = 'visible';
+    };
+
+
+
+
 
 function _gitinit(){
   console.log("Initializing");
@@ -254,10 +268,10 @@ console.log("Showing Commit History");
 
       */
 
-function _gitcommitlogs(){
-  console.log("Showing Commit Logs:");
+function _gitrevertcommit(){
+  console.log("Revert to:");
     var request = new XMLHttpRequest();
-request.open('GET', 'commitlogs', true);
+request.open('GET', 'revertcommit', true);
 
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {

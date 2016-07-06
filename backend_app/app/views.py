@@ -15,11 +15,7 @@ from backend import *
 
 
 b = backend()
-	#def push():
 
-	#def pull():
-
-	#def clone():
 @app.route('/')
 @app.route('/index')
 def index():
@@ -87,12 +83,34 @@ def commithistory():
 	return img+c
 
 
-@app.route('/commitlogs', methods=['GET', 'POST'])
-def commitlogs():
+@app.route('/revertcommit', methods=['GET', 'POST'])
+def revertcommit():
 	#b.load_repo("turtle")
-	a = b.commit_logs()
-	#print type(a)
-	return a
+	print b.current_file_name
+	#a = b.get_commit_history(b.current_file_name)
+	a = b.get_commit_id_and_message(b.current_file_name)
+	c = ""
+	for i in a:
+		c += "<a onclick=\"_returncommit(\"" + str(i) + "\")\" href=\"#\">" + str(i) + "</a>"
+	print c 
+	print type(a)
+	print len(a)
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	c = "<h2>" + c + "</h2>"
+	return img+c
+
+
+@app.route('/returncommit', methods=['GET', 'POST'])
+def returncommit():
+	a = request.form['data']
+	print a
+	print type(a)
+	a = str(a)
+
+	a = "<h2> File Saved: " + b.current_file_name + "</h2>" 
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	return img+a
+
 
 
 
@@ -159,10 +177,9 @@ def difftree():
 			print j
 		for j in rep2:
 			print j
+		for j in rep1:
+			print len(j)
 		i = i+2
-
-
-
 
 	#print output
 	#print b.get_diff()

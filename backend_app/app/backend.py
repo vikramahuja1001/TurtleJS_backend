@@ -118,6 +118,25 @@ class backend():
 		for i in iter(w):
 			count += 1
 			a.append(i.commit)
+			print type(i)
+			print type(i.commit)
+			a.append('\n')
+		return a
+
+	def get_commit_id_and_message(self, f):
+		print self.repo_path
+		r = self.repo
+		w = r.get_walker(paths=[f], max_entries=None)
+		count = 0
+		a = []
+		for i in iter(w):
+			count += 1
+			lin = ''
+			lin = i.commit.id + '_' + i.commit.message 
+			a.append(lin)
+
+			print type(i)
+			print type(i.commit)
 			a.append('\n')
 		return a
 
