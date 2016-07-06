@@ -46,15 +46,47 @@
     docById('descElem').style.visibility = 'visible';
     };
 
-    function _returncommit(){
+    function _returncommit(da){
+      var data = 'data=' + da;
       console.log(data);
       var request = new XMLHttpRequest();
       request.open('POST', 'returncommit', true);
       request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-      request.send(data);
+
+
+request.onload = function() {
+  if (request.status >= 200 && request.status < 400) {
+    // Success!
+     resp = request.responseText;
+    console.log(resp);
+    var cleanData = resp.replace('\n', ' ');
+    console.log(cleanData);
+    var obj = JSON.parse(cleanData);
+    console.log(obj);
+         for (var name in blocks.palettes.dict) {
+                            blocks.palettes.dict[name].hideMenu(true);
+                        }
+    //refreshCanvas();
+    blocks.loadNewBlocks(obj);
+
+      //change_commit();
       resp = "reverted";
       docById('descElem').innerHTML =resp;
     docById('descElem').style.visibility = 'visible';
+
+  } else {
+    // We reached our target server, but it returned an error
+
+  }
+};
+
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+
+
+      request.send(data);
+
     };
 
 
@@ -313,7 +345,7 @@ function _gitloadrepo(){
   console.log('Loading .tb file');
 
     document.querySelector('#myOpenGitFile').focus();
-            document.querySelector('#myOpenGitFile').click();
+    document.querySelector('#myOpenGitFile').click();
             window.scroll(0, 0);
     
 };
@@ -446,7 +478,8 @@ console.log("Showing Diff between 2 commits : ");
         <div id="ioDiv">
           <input class="file" type="file" id="myMedia" accept="image/*"/>
           <input class="file" type="file" id="myOpenFile" accept=".ta, .tb"/>
-                   <input class="file" type="file" id="myOpenGitFile" accept=".ta, .tb"/>
+            <input class="file" type="file" id="myOpenGitFile" accept=".ta, .tb"/>
+
           <input class="file" type="file" id="myOpenPlugin" accept=".json"/>
           <input class="file" type="file" id="myOpenAll" />
   <!-- <input class="file" type="file" id="mySaveFile" accept=".ta, .tb" nwsaveas="turtle-project.tb" /> -->
@@ -454,6 +487,7 @@ console.log("Showing Diff between 2 commits : ");
         <div id="audio"></div>
         <div id="tourData"></div>
     </div>
+    <div id="changecommit"></div>
 
     <div id="helpElem"></div>
     <div id="descElem" style="position: absolute; display: block; padding: 0px 15px 15px; font-size: 20px; color: rgb(0, 0, 0); background:white;left: 35%; top: 30%; width: 200px; height: 200px;  border: 1px #111 solid; visibility: hidden;"><img src="{{ url_for('static', filename='header-icons/delete.svg') }}"  onclick="hide()"/><h2></h2></div>

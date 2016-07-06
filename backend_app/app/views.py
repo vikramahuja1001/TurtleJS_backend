@@ -83,6 +83,8 @@ def commithistory():
 	return img+c
 
 
+
+
 @app.route('/revertcommit', methods=['GET', 'POST'])
 def revertcommit():
 	#b.load_repo("turtle")
@@ -90,8 +92,10 @@ def revertcommit():
 	#a = b.get_commit_history(b.current_file_name)
 	a = b.get_commit_id_and_message(b.current_file_name)
 	c = ""
+	count = 1
 	for i in a:
-		c += "<a onclick=\"_returncommit(\"" + str(i) + "\")\" href=\"#\">" + str(i) + "</a>"
+		count +=1
+		c += "<a onclick=\"_returncommit(" + str(count/2) + ")\" href=\"javascript:void(0)\">" + str(i) + "</a>"
 	print c 
 	print type(a)
 	print len(a)
@@ -102,14 +106,45 @@ def revertcommit():
 
 @app.route('/returncommit', methods=['GET', 'POST'])
 def returncommit():
-	a = request.form['data']
-	print a
-	print type(a)
-	a = str(a)
+	print "vikram"
+	data = request.form['data']
+	print data
+	print type(data)
+	a = str(data)
+	print b.current_file_name
+	print b.repo_name
+	print b.repo_path
+	print os.getcwd()
+	os.system('ls')
+	diff_filename = "diff_file_%s" % (b.current_file_name)
+	cmdstring = "python app/diff_func.py %s > diffs/%s" % (b.current_file_name, diff_filename)
+	os.system(cmdstring)
+	file_object = open("diffs/%s" % (diff_filename), "r")
+	a = file_object.readlines()
+	c = []
+	for i in a:
+		if len(i)> 200:
+			c.append(i)
 
-	a = "<h2> File Saved: " + b.current_file_name + "</h2>" 
+	d = []
+	d.append(c[0])
+	tot = len(c) - 2
+	if tot > 0:
+		i = 1
+		while i<=tot:
+			d.append(c[i])
+			i +=2
+	d.append(c[tot+1])
+	for i in range(len(d)):
+		d[i] = d[i][1:]
+		print i
+
+	a = str(d[int(data) - 1] )
+	print a
 	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
-	return img+a
+	return a
+
+
 
 
 

@@ -134,6 +134,7 @@ define(function (require) {
         // Set up a file chooser for the doOpen function.
         var fileChooser = docById('myOpenFile');
         var GitfileChooser = docById('myOpenGitFile');
+        var changecommit = document.getElementById('changecommit');
         // Set up a file chooser for the doOpenPlugin function.
         var pluginChooser = docById('myOpenPlugin');
         // The file chooser for all files.
@@ -523,6 +524,7 @@ define(function (require) {
         // Get things started
         init();
 
+
         function init() {
             docById('loader').className = 'loader';
 
@@ -642,9 +644,15 @@ define(function (require) {
                 reader.readAsText(fileChooser.files[0]);
             }, false);
 
+            document.getElementById('changecommit').onchange( function (event) {
+                console.log('vikram ahuja');
+            });
+
+
             GitfileChooser.addEventListener('click', function (event) {
                 this.value = null;
             });
+
 
             GitfileChooser.addEventListener('change', function (event) {
                 // Read file here.
