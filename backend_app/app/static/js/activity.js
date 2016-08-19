@@ -644,9 +644,6 @@ define(function (require) {
                 reader.readAsText(fileChooser.files[0]);
             }, false);
 
-            document.getElementById('changecommit').onchange( function (event) {
-                console.log('vikram ahuja');
-            });
 
 
             GitfileChooser.addEventListener('click', function (event) {
@@ -658,11 +655,16 @@ define(function (require) {
                 // Read file here.
                 var reader = new FileReader();
 
+                
                 reader.onload = (function (theFile) {
                     // Show busy cursor.
                     document.body.style.cursor = 'wait';
                     setTimeout(function () {
                         var rawData = reader.result;
+                        console.log(rawData);
+                        a = GitfileChooser.files[0].name;
+                        console.log(a);
+                       
                         var cleanData = rawData.replace('\n', ' ');
                         console.log(cleanData);
                         var obj = JSON.parse(cleanData);
@@ -676,31 +678,25 @@ define(function (require) {
 
                         blocks.loadNewBlocks(obj);
 
-                            var request = new XMLHttpRequest();
-request.open('GET', 'loadrepo', true);
 
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
-    // Success!
-    var resp = request.responseText;
-    console.log(resp);
-        docById('descElem').innerHTML =resp;
+
+
+                        data = 'data=' + a;
+      console.log(data);
+      var request = new XMLHttpRequest();
+      request.open('POST', 'loadrepo', true);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.send(data);
+      resp = request.responseText;
+docById('descElem').innerHTML =resp;
 docById('descElem').style.visibility = 'visible';
-  } else {
-    // We reached our target server, but it returned an error
 
-  }
-};
-
-request.onerror = function() {
-  // There was a connection error of some sort
-};
-request.send();
+                            
                         // Restore default cursor.
                         document.body.style.cursor = 'default';
                     }, 200);
                 });
-
+                
                 reader.readAsText(GitfileChooser.files[0]);
             }, false);
 
@@ -2023,15 +2019,17 @@ request.send();
                 ['collapse-blocks', _toggleCollapsibleStacks, _('Expand/collapse collapsable blocks')],
                 ['go-home', _findBlocks, _('Home')],
                 ['help', _showHelp, _('Help')],
-                ['help', _gitinit, _('Init')],
+                ['help', _initname, _('Init')],
                 ['help', _save, _('Save to file')],
                 ['help', _gitadd, _('Add')],
                 ['help', _gitstatus, _('Status')],
-                ['help', _gitcommit, _('Commit')],
+                ['help', _commitdetails, _('Commit')],
                 ['help', _gitcommithistory, _('Commit History')],
                 ['help', _gitrevertcommit, _('Revert back to a commit')],
                 ['help', _gitdiff, _('Diff of last 2 commits')],
-                ['help', _gitloadrepo, _('Load A repo')]
+                ['help', _gitloadrepo, _('Load A repo')],
+                ['help', _gitclone, _('Git Clone/Pull/Load')],
+                ['help', _gitpush, _('Git Push')]
 
 
             ];

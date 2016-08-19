@@ -43,7 +43,7 @@ class backend():
 		self.repo_path = ""
 		self.repo_name = ""
 		self.isaclone = 0
-		self.cloned_from = ""
+		self.cloned_from = "ssh://git@github.com/vikramahuja1001/TurtleCodes"
 		self.current_file_name = ""
 
 
@@ -146,9 +146,11 @@ class backend():
 		p.clone(self.repo_path,clone_repo_name)
 
 
-	def clone_remote(remote_repo_name, clone_repo_name):
+	def clone_remote(self, clone_repo_name):
 		#Creating a clone of remote repo.
-		p.clone(remote_repo_name, clone_repo_name)
+		self.isaclone = 1
+		#Creating a clone of remote repo.
+		p.clone(self.cloned_from, clone_repo_name)
 
 
 	def commit_logs(self):
@@ -215,3 +217,15 @@ class backend():
 
 		else:
 			print "Can not update"
+
+
+	def push(self):
+		try:
+			refs_path = b"refs/heads/master"
+			new_id = self.repo[b'HEAD'].id
+			#self.assertNotEqual(new_id, ZERO_SHA)
+			self.repo.refs[refs_path] = new_id
+			p.push( self.repo.path,self.cloned_from, b"HEAD:" + refs_path)
+		except Exception as e:
+			print e
+			print "Error"

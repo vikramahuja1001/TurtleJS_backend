@@ -21,22 +21,6 @@ b = backend()
 def index():
 	return render_template('index.html')
 
-@app.route('/ginit', methods=['GET', 'POST'])
-def ginit():
-	print "Initializing the repo"
-	#b = backend()
-	b.local_init("turtle", "TurtleJS")
-	print b.repo_name
-	a = "turtle_vikram.tb"
-	b.set_current_file_name(a)
-	c = "[[0,[\"start\",{\"collapsed\":false,\"xcor\":0,\"ycor\":0,\"heading\":0,\"color\":0,\"shade\":50,\"pensize\":5,\"grey\":100}],250,150,[null,null,null]]]"
-	b.create_file(a,c)
-	b.set_current_file_name(a)
-
-	print "File Created"
-	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
-	a = "<h2>Local  repo " + b.repo_name + " created</h2>"
-	return img+a
 
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -58,8 +42,11 @@ def status():
 
 @app.route('/commit', methods=['GET', 'POST'])
 def commit():
+	a = request.form['data']
+	print a
+	print type(a)
+	a = str(a)
 	#b.load_repo("turtle")
-	a = "First Commit"
 	b.commit(a)
 	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
 	c = "<h2>Commited with Commit message:" + a + "</h2>"
@@ -225,11 +212,15 @@ def difftree():
 
 @app.route('/loadrepo', methods=['GET', 'POST'])
 def loadrepo():
+	a = request.form['data']
+	print a
+	print type(a)
+	a = str(a)
 	b.load_repo("turtle")
-	b.set_current_file_name("turtle_vikram.tb")
+	b.set_current_file_name(a)
 	print b.current_file_name
 	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
-	a = "<h2>Repo loaded: " + b.repo_name + "</h2>"
+	a = "<h2>File loaded: " + b.current_file_name + "</h2>"
 	return img+a
 
 @app.route('/save', methods=['GET', 'POST'])
@@ -244,3 +235,43 @@ def save():
 	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
 	return img+a
 
+
+
+@app.route('/clone', methods=['GET', 'POST'])
+def clone():
+	if os.path.exists('turtle'):
+		b.load_repo("turtle")
+		a = "<h2> Loaded" + "</h2>"
+	else:
+		b.clone_remote('turtle')
+		b.load_repo("turtle")
+		a = "<h2> Cloned" + "</h2>"
+	print "Cloned"
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	return img+a
+
+
+@app.route('/push', methods=['GET', 'POST'])
+def push():
+	b.push()
+	print "PUSHED"
+	a = "Pushed"
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	return img+a
+
+@app.route('/ginit', methods=['GET', 'POST'])
+def ginit():
+	a = request.form['data']
+	print a
+	print type(a)
+	a = str(a)
+	a = a+'.tb'
+	b.set_current_file_name(a)
+	c = "[[0,[\"start\",{\"collapsed\":false,\"xcor\":0,\"ycor\":0,\"heading\":0,\"color\":0,\"shade\":50,\"pensize\":5,\"grey\":100}],250,150,[null,null,null]]]"
+	b.create_file(a,c)
+	b.set_current_file_name(a)
+
+	print "File Created"
+	img = "<img src=\"{{ url_for('static', filename='header-icons/delete.svg') }}\"  onclick=\"hide()\"/>"
+	a = "<h2>Local  repo " + b.repo_name + " created</h2>"
+	return img+a

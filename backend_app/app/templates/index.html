@@ -93,11 +93,12 @@ request.onerror = function() {
 
 
 
-function _gitinit(){
-  console.log("Initializing");
+
+function _gitpush(){
+  console.log("Cloning");
   var resp = "hello";
     var request = new XMLHttpRequest();
-request.open('GET', 'ginit', true);
+request.open('GET', 'push', true);
 
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
@@ -117,6 +118,69 @@ request.onerror = function() {
   // There was a connection error of some sort
 };
 request.send();
+
+};
+
+
+
+
+
+
+function _gitclone(){
+  console.log("Cloning");
+  var resp = "hello";
+    var request = new XMLHttpRequest();
+request.open('GET', 'clone', true);
+
+request.onload = function() {
+  if (request.status >= 200 && request.status < 400) {
+    // Success!
+     resp = request.responseText;
+    console.log(resp);
+    docById('descElem').innerHTML =resp;
+docById('descElem').style.visibility = 'visible';
+
+  } else {
+    // We reached our target server, but it returned an error
+
+  }
+};
+
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+request.send();
+
+};
+
+
+function _initname(){
+  docById('filename').style.visibility = 'visible';
+};
+
+function _test(){
+  a = document.getElementById('filenames').value;
+console.log(a);
+
+};
+
+
+
+
+
+function _gitinit(){
+      a = document.getElementById('filenames').value;
+      console.log("Initializing");
+      console.log(a);
+      data = 'data=' + a;
+      console.log(data);
+      var request = new XMLHttpRequest();
+      request.open('POST', 'ginit', true);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.send(data);
+      resp = "New File Created";
+      docById('filename').style.visibility = 'hidden';
+
 
 };
 /*
@@ -220,29 +284,32 @@ console.log("Getting Status");
 
         */
 
+function _commitdetails(){
+ docById('commitmessage').style.visibility = 'visible';
+
+}
 
     function _gitcommit(){
-  console.log("Commiting");
-    var request = new XMLHttpRequest();
-request.open('GET', 'commit', true);
 
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
-    // Success!
-    var resp = request.responseText;
+
+      a = document.getElementById('commitmsg').value;
+      console.log("COmmitting");
+      console.log(a);
+      data = 'data=' + a;
+      console.log(data);
+      var request = new XMLHttpRequest();
+      request.open('POST', 'commit', true);
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+      request.send(data);
+      resp = "New File Created";
+
+ docById('commitmessage').style.visibility = 'hidden';
+          var resp = request.responseText;
     console.log(resp);
         docById('descElem').innerHTML =resp;
 docById('descElem').style.visibility = 'visible';
-  } else {
-    // We reached our target server, but it returned an error
 
-  }
-};
 
-request.onerror = function() {
-  // There was a connection error of some sort
-};
-request.send();
 };
 
 /*
@@ -482,13 +549,30 @@ console.log("Showing Diff between 2 commits : ");
 
           <input class="file" type="file" id="myOpenPlugin" accept=".json"/>
           <input class="file" type="file" id="myOpenAll" />
+
   <!-- <input class="file" type="file" id="mySaveFile" accept=".ta, .tb" nwsaveas="turtle-project.tb" /> -->
         </div>
         <div id="audio"></div>
         <div id="tourData"></div>
     </div>
     <div id="changecommit"></div>
+    
+<div id="filename" style="position: absolute; display: block; padding: 0px 15px 15px; font-size: 20px; color: rgb(0, 0, 0); background:white;left: 35%; top: 30%; width: 200px; height: 200px;  border: 1px #111 solid; visibility: hidden;">
 
+              Enter File name :<input id ="filenames" type="text" name="filenames"><br>
+         
+          <button onclick="_gitinit()">Create</button>
+</div>
+
+<div id="commitmessage" style="position: absolute; display: block; padding: 0px 15px 15px; font-size: 20px; color: rgb(0, 0, 0); background:white;left: 35%; top: 30%; width: 200px; height: 200px;  border: 1px #111 solid; visibility: hidden;">
+
+              Enter commit Message :<input id ="commitmsg" type="text" name="filenames"><br>
+         
+          <button onclick="_gitcommit()">Create</button>
+</div>
+
+
+</div>
     <div id="helpElem"></div>
     <div id="descElem" style="position: absolute; display: block; padding: 0px 15px 15px; font-size: 20px; color: rgb(0, 0, 0); background:white;left: 35%; top: 30%; width: 200px; height: 200px;  border: 1px #111 solid; visibility: hidden;"><img src="{{ url_for('static', filename='header-icons/delete.svg') }}"  onclick="hide()"/><h2></h2></div>
 
